@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Player.css"
-// 3 adding state for making the edit button work
+// 3 we want to change the player name and be able to save it
 
 export default function Player({ initialName, symbol }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -9,10 +9,13 @@ export default function Player({ initialName, symbol }) {
     function handleEditClick() {
         setIsEditing(isEditing => !isEditing)
     }
+    function handleInputChange(event) {
+        setPlayerName(event.target.value)
+    }
 
     let editPlayer = <span className="player-name">{playerName}</span>
     if (isEditing) {
-        editPlayer = <input type="text" />
+        editPlayer = <input type="text" value={playerName} onChange={handleInputChange} />
     }
 
     return (
