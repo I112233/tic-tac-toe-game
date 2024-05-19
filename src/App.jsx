@@ -2,11 +2,71 @@ import React, { useState } from "react";
 import Header from "./Components/Header/Header";
 import Player from "./Components/Header/Player/Player";
 import GameBoard from "./Components/Header/GameBoard/GameBoard";
+import Log from "./Components/Header/Log/Log";
+import { WINNIG_COMBINATIONS } from "../data";
+import GameOver from "./Components/Header/GameOver/GameOver";
+
+const initialGameBoard = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
+
+function auxActivePlayer(gameTurns) {
+  let currentPlayer = "X";
+
+  if (gameTurns.length > 0 && gameTurns[0].player === "X") {
+    currentPlayer = "O";
+  }
+  return currentPlayer;
+}
 
 export default function App() {
-  const [activePlayer, setActivePlayer] = useState("X");
-  function handleSelectedSquare() {
-    setActivePlayer((curActivePlayer) => curActivePlayer === "X" ? "O" : "X")
+  const [gameTurns, setGameTurns] = useState([]);
+
+  const activePlayer = auxActivePlayer(gameTurns);
+
+  let gameBoard = initialGameBoard;
+
+  for (const turn of gameTurns) {
+    const { square, player } = turn;
+    const { row, col } = square;
+
+    gameBoard[row][col] = player;
+  }
+
+  let winner = null;
+
+  for (const combination of WINNIG_COMBINATIONS) {
+    const firstSquareSymbol =
+      gameBoard[combination[0].row][combination[0].column];
+    const secondSquareSymbol =
+      gameBoard[combination[1].row][combination[1].column];
+    const thirdSquareSymbol =
+      gameBoard[combination[2].row][combination[2].column];
+
+    if (
+      firstSquareSymbol &&
+      firstSquareSymbol === secondSquareSymbol &&
+      firstSquareSymbol === thirdSquareSymbol
+    ) {
+      winner = firstSquareSymbol;
+    }
+  }
+
+  const hasDraw = gameTurns.length === 9 && !winner
+
+  function handleSelectedSquare(rowIndex, colIndex) {
+    setGameTurns((prevGameTurns) => {
+      const currentPlayer = auxActivePlayer(prevGameTurns);
+
+      const updatedTurns = [
+        { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
+        ...prevGameTurns,
+      ];
+
+      return updatedTurns;
+    });
   }
 
   return (
@@ -15,12 +75,25 @@ export default function App() {
       <main>
         <div id="game-container">
           <ol id="players" className="highlight-player">
-            <Player initialName="Player 1" symbol="X" isActive={activePlayer === "X"} />
-            <Player initialName="Player 2" symbol="O" isActive={activePlayer === "O"} />
+            <Player
+              initialName="Player 1"
+              symbol="X"
+              isActive={activePlayer === "X"}
+            />
+            <Player
+              initialName="Player 2"
+              symbol="O"
+              isActive={activePlayer === "O"}
+            />
           </ol>
-          <GameBoard onSelectedSquare={handleSelectedSquare} activePlayerSymbol={activePlayer} />
+          {(winner || hasDraw) && <GameOver winner={winner} />}
+          <GameBoard
+            onSelectedSquare={handleSelectedSquare}
+            board={gameBoard}
+          />
         </div>
+        <Log turns={gameTurns} />
       </main>
     </>
-  )
+  );
 }
