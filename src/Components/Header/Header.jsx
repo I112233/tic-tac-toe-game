@@ -5,10 +5,10 @@ import "./Header.css"
 export default function Header() {
     return (
         <>
-            <header>
-                <img src={logo} alt="tic-tac-toe-logo" />
-                <h1>Tic-tac-toe</h1>
-                <p>Have some fun! 😃</p>
+            <header >
+                <img style={{ marginLeft: "0px" }} src={logo} alt="tic-tac-toe-logo" />
+                <h1 style={{ marginLeft: "0px" }}>Tic-tac-toe</h1>
+                <p style={{ marginLeft: "30px" }}>Have some fun! 😃</p>
             </header>
         </>
     )

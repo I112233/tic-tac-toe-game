@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Varela+Round&display=swap");
 body {
   background: radial-gradient(
       circle at top,
@@ -6,8 +7,9 @@ body {
     ),
     url("./assets/bg-pattern-dark.png");
   background-repeat: repeat;
-  background-size: 100% 100%, 30% 30%, 100% 100%;
+  /* background-size: 30% 30%, 30% 30%, 30% 30%; */
   min-height: 110rem;
+  font-family: "Varela Round", serif;
 }
 
 #game-container {

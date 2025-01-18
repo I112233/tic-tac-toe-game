@@ -22,12 +22,12 @@
 }
 
 #game-board button {
-  width: 8rem;
-  height: 8rem;
+  width: 95px;
+  height: 95px;
   border: none;
   background-color: #aca788;
   color: #3f3b00;
-  font-size: 5rem;
+  font-size: 50px;
   cursor: pointer;
   font-family: cursive;
   padding: 1rem;

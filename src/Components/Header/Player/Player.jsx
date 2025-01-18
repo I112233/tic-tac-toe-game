@@ -23,7 +23,7 @@ export default function Player({ initialName, symbol, isActive }) {
                 <span className="player">
                     {editPlayer}
                     <span className="player-symbol">{symbol}</span>
-                    <button onClick={handleEditClick}>{isEditing ? "Save" : "Edit"}</button>
+                    <button style={{ fontFamily: "Valera Round, serif", fontSize: "20px", marginLeft: "10px" }} onClick={handleEditClick}>{isEditing ? "Save" : "Edit"}</button>
                 </span>
             </li>
         </>
